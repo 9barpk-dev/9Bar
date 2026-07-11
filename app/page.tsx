@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Coffee, MapPin, PackageCheck, ShieldCheck, Sparkles, Timer } from "lucide-react";
 import { OrderActions } from "@/components/order-actions";
+import { DeliveryAvailabilityChecker } from "@/components/delivery-availability-checker";
 import { Card, CardContent } from "@/components/ui/card";
 import { bestSellers, featuredItems } from "@/lib/menu";
 import { orderLinks, siteConfig } from "@/lib/site";
@@ -55,6 +56,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      <DeliveryAvailabilityChecker />
 
       <motion.section variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid gap-4 md:grid-cols-3">
