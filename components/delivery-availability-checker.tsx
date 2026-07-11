@@ -41,7 +41,7 @@ export function DeliveryAvailabilityChecker() {
   };
 
   return (
-    <section aria-labelledby="delivery-checker-title" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <section aria-labelledby="delivery-checker-title" className="delivery-checker mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="relative overflow-hidden rounded-[30px] border border-[#d2a24c]/25 bg-[linear-gradient(120deg,rgba(67,43,22,0.78),rgba(20,15,12,0.92)_50%,rgba(31,24,18,0.87))] p-6 shadow-[0_24px_60px_rgba(0,0,0,0.25)] sm:p-8">
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#d2a24c]/15 blur-3xl" />
         <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">

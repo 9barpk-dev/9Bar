@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
+    <div className="brand-page mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
       <p className="text-sm uppercase tracking-[0.35em] text-[#d2a24c]">Privacy Policy</p>
       <h1 className="mt-3 text-4xl font-semibold text-white sm:text-5xl">Your privacy matters to us.</h1>
       <Card className="mt-10">

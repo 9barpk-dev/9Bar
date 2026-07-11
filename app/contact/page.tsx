@@ -4,7 +4,7 @@ import { phoneNumber, whatsappNumber } from "@/lib/site";
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <div className="brand-page mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="max-w-3xl">
         <p className="text-sm uppercase tracking-[0.35em] text-[#d2a24c]">Contact</p>
         <h1 className="mt-3 text-4xl font-semibold text-white sm:text-5xl">Reach 9 BAR for premium coffee orders and quick assistance.</h1>

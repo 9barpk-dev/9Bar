@@ -13,21 +13,21 @@ const navItems = [
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen text-[#f8efe5]">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#090807]/75 backdrop-blur-2xl">
+    <div className="min-h-screen text-[#3b2a1f]">
+      <header className="sticky top-0 z-40 border-b border-[#c8a46a]/20 bg-[#f6f0e8]/80 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" aria-label="9 BAR home" className="flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.03]">
             <span className="relative h-10 w-10 overflow-hidden rounded-full border border-[#d2a24c]/50 bg-[#e8d7bd] shadow-[0_0_18px_rgba(210,162,76,0.2)]"><Image src="/images/brand/9bar-brand-art.png" alt="9 BAR coffee mark" fill sizes="40px" className="object-cover object-[50%_31%] scale-[1.75]" /></span>
-            <span className="text-sm font-semibold tracking-[0.28em] text-[#f8efe5]">9 BAR</span>
+            <span className="font-serif text-lg font-semibold tracking-[0.2em] text-[#3b2a1f]">9 BAR</span>
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="text-sm font-medium text-[#f8efe5]/80 transition-colors duration-300 hover:text-[#d2a24c]">
+              <Link key={item.href} href={item.href} className="text-sm font-medium text-[#3b2a1f]/75 transition-colors duration-300 hover:text-[#8b6a3d]">
                 {item.label}
               </Link>
             ))}
           </nav>
-          <Link href={orderLinks.phone} className="hidden items-center gap-2 rounded-full border border-[#d2a24c]/40 bg-[#d2a24c]/5 px-4 py-2 text-sm font-semibold text-[#f8efe5] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d2a24c]/15 sm:flex">
+          <Link href={orderLinks.phone} className="hidden items-center gap-2 rounded-full border border-[#c8a46a]/50 bg-white/55 px-4 py-2 text-sm font-semibold text-[#3b2a1f] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c8a46a]/15 sm:flex">
             <PhoneCall size={16} />
             Call Us
           </Link>
@@ -36,7 +36,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
       <main>{children}</main>
 
-      <footer className="border-t border-white/10 bg-[#080706]/80">
+      <footer className="border-t border-[#8b6a3d]/30 bg-[#3b2a1f] text-[#f6f0e8]">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-3 lg:px-8">
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-[#d2a24c]">9 BAR</p>
@@ -63,9 +63,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
-      <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 rounded-2xl border border-white/15 bg-[#120e0b]/90 p-2 shadow-2xl backdrop-blur-xl sm:hidden">
-        <Link href={whatsappOrderLink()} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#d2a24c] px-3 py-3 text-sm font-bold text-[#160f07]">Order on WhatsApp</Link>
-        <Link href={orderLinks.phone} aria-label="Call 9 BAR" className="flex w-12 items-center justify-center rounded-xl border border-white/15 text-[#f8efe5]"><PhoneCall size={18} /></Link>
+      <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 rounded-2xl border border-[#c8a46a]/35 bg-[#3b2a1f]/95 p-2 shadow-2xl backdrop-blur-xl sm:hidden">
+        <Link href={whatsappOrderLink()} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#8b6a3d] via-[#c8a46a] to-[#8b6a3d] px-3 py-3 text-sm font-bold text-[#fffaf3]">Order on WhatsApp</Link>
+        <Link href={orderLinks.phone} aria-label="Call 9 BAR" className="flex w-12 items-center justify-center rounded-xl border border-[#c8a46a]/35 text-[#f6f0e8]"><PhoneCall size={18} /></Link>
       </div>
     </div>
   );

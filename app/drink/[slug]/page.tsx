@@ -18,7 +18,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <div className="brand-page mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <Card className="overflow-hidden border-[#d2a24c]/20">
           <div className="relative h-[420px]">

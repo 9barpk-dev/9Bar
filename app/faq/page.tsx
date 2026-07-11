@@ -10,7 +10,7 @@ const faqData = [
 
 export default function FAQPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <div className="brand-page mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="max-w-3xl">
         <p className="text-sm uppercase tracking-[0.35em] text-[#d2a24c]">FAQ</p>
         <h1 className="mt-3 text-4xl font-semibold text-white sm:text-5xl">Common questions about 9 BAR and how we work.</h1>

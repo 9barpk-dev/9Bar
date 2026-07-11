@@ -12,7 +12,7 @@ const item = { hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0 } };
 
 export default function MenuPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+    <div className="brand-page mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="grid items-center gap-8 lg:grid-cols-[1fr_280px]">
         <div className="max-w-3xl"><p className="eyebrow">The menu</p><h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">Crafted. Extracted. Perfected.</h1><p className="mt-5 max-w-2xl text-lg leading-8 text-[#f8efe5]/70">Our complete coffee menu, inspired by the 9 BAR house card and made fresh for delivery in Faisalabad.</p></div>
         <div className="relative hidden aspect-[0.72] overflow-hidden rounded-3xl border border-[#d2a24c]/30 shadow-[0_18px_50px_rgba(0,0,0,0.35)] lg:block"><Image src="/images/brand/9bar-menu-card.jpeg" alt="9 BAR signature menu card" fill sizes="280px" className="object-cover object-top" /></div>
