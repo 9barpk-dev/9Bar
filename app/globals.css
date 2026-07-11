@@ -8,7 +8,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #05070b 0%, #0d1018 100%);
+  background: #070606;
+  background-image: radial-gradient(circle at 12% 2%, rgba(178, 119, 48, 0.12), transparent 26rem), radial-gradient(circle at 90% 22%, rgba(210, 162, 76, 0.08), transparent 25rem), linear-gradient(135deg, #070606 0%, #100c09 52%, #090a0d 100%);
   color: #f8efe5;
 }
 
@@ -20,8 +21,18 @@ a {
   text-decoration: none;
 }
 
+button, a { -webkit-tap-highlight-color: transparent; }
+
+:focus-visible { outline: 2px solid #e4b05d; outline-offset: 4px; }
+
+.eyebrow { letter-spacing: .3em; text-transform: uppercase; color: #dcb05b; font-size: .72rem; font-weight: 700; }
+.gold-shimmer { background: linear-gradient(100deg, #fff0c7 0%, #d5a24a 45%, #fff5d3 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
 ::selection {
   background: rgba(210, 162, 76, 0.35);
   color: #fff;
 }
-
