@@ -1,0 +1,57 @@
+9 BAR WEBSITE GUIDE
+
+This website is simple to edit.
+
+1. How to change drink prices
+- Open the file lib/menu.ts.
+- Find the drink you want to update.
+- Change the price value.
+
+2. How to change drink names
+- Open lib/menu.ts.
+- Change the name field for the drink.
+
+3. How to replace images
+- Open the public/images folder.
+- Replace the image file with a new file of the same name.
+- Keep the same file type if possible.
+
+4. How to add a new drink
+- Open lib/menu.ts.
+- Add one new object to the menuItems list.
+- Give it a slug, name, price, description, image, category, and availability.
+
+5. How to delete a drink
+- Open lib/menu.ts.
+- Remove the drink object from the menuItems list.
+
+6. How to change the WhatsApp number
+- Open lib/site.ts.
+- Change whatsappNumber or set NEXT_PUBLIC_WHATSAPP_NUMBER in .env.local.
+
+7. How to change the phone number
+- Open lib/site.ts.
+- Change phoneNumber or set NEXT_PUBLIC_PHONE_NUMBER in .env.local.
+
+8. How to change the Foodpanda link
+- Open lib/site.ts.
+- Change foodpandaUrl or set NEXT_PUBLIC_FOODPANDA_URL in .env.local.
+
+9. How to change the logo
+- Replace the file public/images/logo/logo.svg.
+
+10. How to change banners
+- Replace the file public/images/banners/hero-banner.svg.
+
+11. How to edit the homepage
+- Open app/page.tsx.
+- Change the text, cards, sections, and buttons there.
+
+12. How to push changes to GitHub
+- Run: git add .
+- Run: git commit -m "Update website"
+- Run: git push origin main
+
+13. How automatic deployment works
+- Connect your GitHub repository to Vercel.
+- Every time you push to the main branch, Vercel automatically builds and deploys the website.
