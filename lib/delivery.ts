@@ -1,6 +1,6 @@
 export const deliveryConfig = {
-  // Replace these provisional Faisalabad centre coordinates with your cloud kitchen's exact pin before launch.
-  kitchen: { latitude: 31.4504, longitude: 73.135 },
+  // Exact cloud kitchen coordinates for Eden Garden Canal Road, Faisalabad, Punjab, Pakistan.
+  kitchen: { latitude: 31.4333, longitude: 73.1028 },
   radiusKm: 5,
 } as const;
 
