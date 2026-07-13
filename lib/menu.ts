@@ -5,8 +5,8 @@ const item = (slug: string, name: string, price: string, description: string, im
 
 export const menuItems: MenuItem[] = [
   item("hot-americano", "Hot Americano", "Rs 599", "A bold double shot of espresso, smoothed with perfectly heated water.", images.americano, "Pure & Bold Specials", { featured: true, bestSeller: true }),
-  item("iced-americano", "Iced Americano", "Rs 599", "Double espresso poured over ice and chilled water for a refreshing kick.", images.americano, "Pure & Bold Specials"),
-  item("long-black", "Long Black", "Rs 599", "A double espresso extracted directly over hot water to preserve a rich crema.", images.americano, "Pure & Bold Specials"),
+  item("iced-americano", "Iced Americano", "Rs 599", "Double espresso poured over ice and chilled water for a refreshing kick.", "/images/coffee/americano.png", "Pure & Bold Specials"),
+  item("long-black", "Long Black", "Rs 599", "A double espresso extracted directly over hot water to preserve a rich crema.", "/images/coffee/americano.png", "Pure & Bold Specials"),
   item("classic-hot-latte", "Classic Hot Latte", "Rs 899", "Freshly pulled espresso balanced with perfectly textured steamed milk.", images.latte, "Hot Drinks", { featured: true }),
   item("hot-spanish-latte", "Hot Spanish Latte", "Rs 849", "Espresso and steamed milk enriched with a comforting layer of sweet condensed milk.", "/images/coffee/hot-spanish-latte.jpg.png", "Hot Drinks", { bestSeller: true }),
   item("hot-hazelnut-latte", "Hot Hazelnut Latte", "Rs 899", "Fresh espresso and steamed milk, sweetened with premium hazelnut flavour.", "/images/coffee/hot-hazelnut-latte.jpg.png", "Hot Drinks"),
