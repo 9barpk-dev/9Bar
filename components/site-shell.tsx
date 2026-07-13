@@ -49,6 +49,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <p className="text-sm uppercase tracking-[0.35em] text-[#d2a24c]">9 BAR</p>
             <h3 className="mt-3 text-2xl font-semibold">Luxury coffee, delivered with elegance.</h3>
             <p className="mt-4 max-w-sm text-sm leading-7 text-[#f8efe5]/70">{siteConfig.description}</p>
+            <p className="mt-4 max-w-sm text-sm leading-7 text-[#f8efe5]/70">Based at Eden Garden, Punjab, Faisalabad, Pakistan — a premium cloud café dedicated to fresh delivery.</p>
           </div>
           <div>
             <h4 className="text-lg font-semibold">Quick Links</h4>

@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { OrderActions } from "@/components/order-actions";
 
 const faqData = [
-  { question: "Do you have a physical café location?", answer: "No. 9 BAR operates as a premium cloud coffee café focused on online orders and delivery." },
+  { question: "Do you have a physical café location?", answer: "No. 9 BAR operates as a premium cloud coffee café from Eden Garden, Punjab, Faisalabad. All orders are prepared fresh for delivery and pickup." },
   { question: "Can I order by WhatsApp?", answer: "Yes. The website includes a direct WhatsApp order button with a ready-made message template." },
   { question: "Do you offer food delivery through Foodpanda?", answer: "Yes. A dedicated Foodpanda button is provided so you can easily update the link later." },
   { question: "Can I change pricing easily?", answer: "Yes. All drink details are kept in a single menu file so updates are simple and fast." },

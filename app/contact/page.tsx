@@ -18,7 +18,9 @@ export default function ContactPage() {
             <div className="mt-5 space-y-3 text-sm text-[#f8efe5]/70">
               <p>WhatsApp: {whatsappNumber}</p>
               <p>Phone: {phoneNumber}</p>
-              <p>Foodpanda: Order from our dedicated link</p>
+              <p>Foodpanda: Order through our official Foodpanda page</p>
+              <p>Address: Eden Garden, Punjab, Faisalabad, Pakistan — Cloud Café</p>
+              <p>Business: Premium cloud coffee delivery across Faisalabad with curated espresso-based drinks, lattes, and frappes.</p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
               <OrderActions />

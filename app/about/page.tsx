@@ -20,7 +20,7 @@ export default function AboutPage() {
         <Card>
           <CardContent>
             <h2 className="text-2xl font-semibold text-white">How we serve</h2>
-            <p className="mt-4 text-sm leading-8 text-[#f8efe5]/70">Our customers can order through WhatsApp, direct phone calls, or Foodpanda. We focus on fast communication and an elegant experience without the need for a physical café.</p>
+            <p className="mt-4 text-sm leading-8 text-[#f8efe5]/70">Our customers can order through WhatsApp, direct phone calls, or Foodpanda. We focus on fast communication and an elegant experience from our cloud café at Eden Garden, Punjab, Faisalabad, Pakistan.</p>
           </CardContent>
         </Card>
       </div>
