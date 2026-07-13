@@ -4,7 +4,7 @@ const images = { americano: "/images/americano/amber-americano.svg", latte: "/im
 const item = (slug: string, name: string, price: string, description: string, image: string, category: string, options: Partial<MenuItem> = {}): MenuItem => ({ slug, name, price, description, image, category, availability: "In Stock", ...options });
 
 export const menuItems: MenuItem[] = [
-  item("hot-americano", "Hot Americano", "Rs 599", "A bold double shot of espresso, smoothed with perfectly heated water.", "/images/coffee/hot-americano.jpg.png", "Pure & Bold Specials", { featured: true, bestSeller: true }),
+  item("hot-americano", "Hot Americano", "Rs 599", "A bold double shot of espresso, smoothed with perfectly heated water.", "/images/coffee/hot-americano.jpg.png", "Pure & Bold Specials"),
   item("iced-americano", "Iced Americano", "Rs 599", "Double espresso poured over ice and chilled water for a refreshing kick.", "/images/coffee/americano.png", "Pure & Bold Specials"),
   item("long-black", "Long Black", "Rs 599", "A double espresso extracted directly over hot water to preserve a rich crema.", "/images/coffee/americano.png", "Pure & Bold Specials"),
   item("classic-hot-latte", "Classic Hot Latte", "Rs 899", "Freshly pulled espresso balanced with perfectly textured steamed milk.", "/images/coffee/classic-hot-latte.jpg.png", "Hot Drinks", { featured: true }),
