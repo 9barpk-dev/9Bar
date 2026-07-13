@@ -17,7 +17,7 @@ export const menuItems: MenuItem[] = [
   item("iced-hazelnut-latte", "Iced Hazelnut Latte", "Rs 1099", "Chilled espresso and milk, perfectly sweetened with premium hazelnut.", "/images/coffee/iced-hazelnut-latte.jpg.png", "Iced Signatures"),
   item("iced-caramel-latte", "Iced Caramel Latte", "Rs 1099", "Chilled espresso and milk finished with rich Monin caramel.", "/images/coffee/iced-caramel-latte.jpg.png", "Iced Signatures"),
   item("iced-vanilla-latte", "Iced Vanilla Latte", "Rs 1099", "Chilled espresso and milk softened with sweet Monin vanilla.", "/images/coffee/iced-vanilla-latte.jpg.png", "Iced Signatures"),
-  item("iced-mocha", "Iced Mocha", "Rs 1099", "Chilled espresso, milk, and dark chocolate for a rich finish.", "/images/coffee/cloud-mocha.svg", "Iced Signatures"),
+  item("iced-mocha", "Iced Mocha", "Rs 1099", "Chilled espresso, milk, and dark chocolate for a rich finish.", "/images/coffee/iced-mocha.jpg.png", "Iced Signatures"),
   item("hazelnut-frappe", "Hazelnut Frappe", "Rs 1199", "Smooth ice-blended coffee, finished with premium roasted hazelnut.", "/images/coffee/hazelnut-frappe.jpg.png", "Blended Frappes", { featured: true, bestSeller: true }),
   item("caramel-frappe", "Caramel Frappe", "Rs 1199", "An ice-blended coffee treat finished with rich caramel sauce.", "/images/coffee/caramel-frappe.jpg.png", "Blended Frappes"),
   item("vanilla-frappe", "Vanilla Frappe", "Rs 1199", "Smooth ice-blended coffee sweetened with classic vanilla.", "/images/coffee/vanilla-frappe.jpg.png", "Blended Frappes"),
