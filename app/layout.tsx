@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteShell } from "@/components/site-shell";
+import { OrderCartProvider } from "@/components/order-drawer";
 
 export const metadata: Metadata = {
   title: "9 BAR | Premium Coffee Delivery",
@@ -15,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body><SiteShell>{children}</SiteShell></body>
+      <body><OrderCartProvider><SiteShell>{children}</SiteShell></OrderCartProvider></body>
     </html>
   );
 }

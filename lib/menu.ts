@@ -1,6 +1,5 @@
 export type MenuItem = { slug: string; name: string; price: string; description: string; image: string; category: string; availability: "In Stock" | "Limited"; featured?: boolean; bestSeller?: boolean; seasonal?: boolean; };
 
-const images = { americano: "/images/americano/amber-americano.svg", latte: "/images/latte/royal-latte.svg", coffee: "/images/coffee/velvet-espresso.svg", frappe: "/images/frappe/sunset-frappe.svg" };
 const item = (slug: string, name: string, price: string, description: string, image: string, category: string, options: Partial<MenuItem> = {}): MenuItem => ({ slug, name, price, description, image, category, availability: "In Stock", ...options });
 
 export const menuItems: MenuItem[] = [

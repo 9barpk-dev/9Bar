@@ -45,7 +45,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               <Link href="/menu" className="text-sm font-semibold text-[#d2a24c]">Back to menu</Link>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <OrderActions drinkName={item.name} />
+              <OrderActions drinkName={item.name} price={item.price} />
             </div>
           </CardContent>
         </Card>

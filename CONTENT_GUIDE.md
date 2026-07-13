@@ -8,6 +8,7 @@ Update `lib/site.ts` for the WhatsApp number, phone number, Instagram handle, de
 
 Foodpanda is intentionally hidden until you have your store URL. When it is ready, set `NEXT_PUBLIC_FOODPANDA_URL` in Vercel to the exact restaurant page URL, then redeploy.
 
+
 ## Menu, prices, and descriptions
 
 Update `lib/menu.ts`. Each menu drink is a single `item(...)` line: name, price, description, image path, and category are all there.

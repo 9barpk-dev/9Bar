@@ -1,7 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, PhoneCall } from "lucide-react";
+import { Instagram, Menu, PhoneCall, X } from "lucide-react";
 import { isFoodpandaAvailable, siteConfig, orderLinks, whatsappOrderLink } from "@/lib/site";
+import { CartButton } from "@/components/order-drawer";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -12,8 +16,10 @@ const navItems = [
 ];
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <div className="min-h-screen text-[#3b2a1f]">
+      <div className="bg-[#3b2a1f] px-4 py-2 text-center text-xs font-semibold tracking-wide text-[#f8efe5] sm:text-sm">🚚 FREE Delivery on orders above Rs. 2,000 (within 10 km) <span className="mx-1.5 text-[#d2a24c]">•</span> ☕ Freshly Brewed <span className="mx-1.5 text-[#d2a24c]">•</span> Delivered Fast <span className="mx-1.5 text-[#d2a24c]">•</span> Premium Coffee.</div>
       <header className="sticky top-0 z-40 border-b border-[#c8a46a]/20 bg-[#f6f0e8]/80 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" aria-label="9 BAR home" className="flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.03]">
@@ -27,11 +33,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               </Link>
             ))}
           </nav>
-          <Link href={orderLinks.phone} className="hidden items-center gap-2 rounded-full border border-[#c8a46a]/50 bg-white/55 px-4 py-2 text-sm font-semibold text-[#3b2a1f] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c8a46a]/15 sm:flex">
+          <div className="flex items-center gap-2"><Link href={orderLinks.phone} className="hidden items-center gap-2 rounded-full border border-[#c8a46a]/50 bg-white/55 px-4 py-2 text-sm font-semibold text-[#3b2a1f] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c8a46a]/15 sm:flex">
             <PhoneCall size={16} />
             Call Us
-          </Link>
+          </Link><CartButton /><button type="button" onClick={() => setMobileOpen((open) => !open)} aria-expanded={mobileOpen} aria-label="Toggle navigation menu" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#c8a46a]/45 bg-white/60 md:hidden">{mobileOpen ? <X size={19} /> : <Menu size={20} />}</button></div>
         </div>
+        {mobileOpen && <nav className="border-t border-[#c8a46a]/20 bg-[#fffaf3] px-4 py-4 md:hidden"><div className="mx-auto grid max-w-7xl gap-1">{navItems.map((item) => <Link onClick={() => setMobileOpen(false)} key={item.href} href={item.href} className="rounded-xl px-4 py-3 text-sm font-semibold transition hover:bg-[#efe3d1]">{item.label}</Link>)}</div></nav>}
       </header>
 
       <main>{children}</main>
