@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { PhoneCall, ShoppingBag } from "lucide-react";
 import { foodpandaUrl, orderLinks } from "@/lib/site";
 import { useOrderCart } from "@/components/order-drawer";
@@ -25,7 +26,7 @@ export function OrderActions({ compact = false, drinkName, price }: { compact?: 
         Call Now
       </Link>
       <Link href={foodpandaUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[#8b6a3d]/25 bg-[#fffaf3]/70 px-5 py-3 text-sm font-semibold text-[#3b2a1f] transition-all duration-300 hover:-translate-y-1 hover:border-[#c8a46a] hover:text-[#8b6a3d]">
-        <ShoppingBag size={16} />
+        <Image src="/icons8-foodpanda-48.png" alt="Foodpanda" width={16} height={16} />
         Foodpanda
       </Link>
     </div>

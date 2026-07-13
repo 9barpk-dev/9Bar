@@ -61,9 +61,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div>
             <h4 className="text-lg font-semibold">Order Today</h4>
             <div className="mt-4 flex flex-wrap gap-3">
-              <Link href={orderLinks.whatsapp} target="_blank" rel="noreferrer" className="rounded-full border border-[#d2a24c]/40 px-4 py-2 text-sm font-semibold text-[#d2a24c]">WhatsApp</Link>
+              <Link href={orderLinks.whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[#d2a24c]/40 px-4 py-2 text-sm font-semibold text-[#d2a24c]"><Image src="/whatsapp.png" alt="WhatsApp" width={16} height={16} />WhatsApp</Link>
               <Link href={orderLinks.phone} className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5]">Call</Link>
-              <Link href={orderLinks.foodpanda} target="_blank" rel="noreferrer" className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5]">Foodpanda</Link>
+              <Link href={orderLinks.foodpanda} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5]"><Image src="/icons8-foodpanda-48.png" alt="Foodpanda" width={16} height={16} />Foodpanda</Link>
               <Link href={siteConfig.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5] transition hover:border-[#d2a24c]/50 hover:text-[#d2a24c]"><Instagram size={15} />{siteConfig.instagramHandle}</Link>
             </div>
             <p className="mt-6 text-sm text-[#f8efe5]/60">© 2026 9 BAR. All rights reserved.</p>

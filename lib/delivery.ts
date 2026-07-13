@@ -4,6 +4,8 @@ export const deliveryConfig = {
   radiusKm: 5,
 } as const;
 
+export const deliveryFeeText = "Delivery fee is Rs. 100 for 0–2 km and Rs. 150 for 2–5 km.";
+
 export function calculateDistanceKm(
   from: { latitude: number; longitude: number },
   to: { latitude: number; longitude: number },
