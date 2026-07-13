@@ -12,6 +12,8 @@ const item = { hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0 } };
 
 const menuSections = [
   { title: "Hot", items: menuItems.filter((coffee) => coffee.category === "Hot") },
+  { title: "Americano", items: menuItems.filter((coffee) => coffee.category === "Americano") },
+  { title: "Long Black", items: menuItems.filter((coffee) => coffee.category === "Long Black") },
   { title: "Iced Latte", items: menuItems.filter((coffee) => coffee.category === "Iced Latte") },
   { title: "Frappes", items: menuItems.filter((coffee) => coffee.category === "Frappes") },
 ];
