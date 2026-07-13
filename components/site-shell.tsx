@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Instagram, Menu, PhoneCall, X } from "lucide-react";
-import { isFoodpandaAvailable, siteConfig, orderLinks, whatsappOrderLink } from "@/lib/site";
+import { siteConfig, orderLinks } from "@/lib/site";
 import { CartButton } from "@/components/order-drawer";
 
 const navItems = [
@@ -19,7 +19,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <div className="min-h-screen text-[#3b2a1f]">
-      <div className="bg-[#3b2a1f] px-4 py-2 text-center text-xs font-semibold tracking-wide text-[#f8efe5] sm:text-sm">🚚 FREE Delivery on orders above Rs. 2,000 (within 10 km) <span className="mx-1.5 text-[#d2a24c]">•</span> ☕ Freshly Brewed <span className="mx-1.5 text-[#d2a24c]">•</span> Delivered Fast <span className="mx-1.5 text-[#d2a24c]">•</span> Premium Coffee.</div>
+      <div className="bg-[#3b2a1f] px-4 py-2 text-center text-xs font-semibold tracking-wide text-[#f8efe5] sm:text-sm">🚚 FREE Delivery on orders above Rs. 2,000 (within 5 km) <span className="mx-1.5 text-[#d2a24c]">•</span> ☕ Freshly Brewed <span className="mx-1.5 text-[#d2a24c]">•</span> Delivered Fast <span className="mx-1.5 text-[#d2a24c]">•</span> Premium Coffee.</div>
       <header className="sticky top-0 z-40 border-b border-[#c8a46a]/20 bg-[#f6f0e8]/80 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" aria-label="9 BAR home" className="flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.03]">
@@ -63,7 +63,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <div className="mt-4 flex flex-wrap gap-3">
               <Link href={orderLinks.whatsapp} target="_blank" rel="noreferrer" className="rounded-full border border-[#d2a24c]/40 px-4 py-2 text-sm font-semibold text-[#d2a24c]">WhatsApp</Link>
               <Link href={orderLinks.phone} className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5]">Call</Link>
-              {isFoodpandaAvailable && <Link href={orderLinks.foodpanda} target="_blank" rel="noreferrer" className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5]">Foodpanda</Link>}
+              <Link href={orderLinks.foodpanda} target="_blank" rel="noreferrer" className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5]">Foodpanda</Link>
               <Link href={siteConfig.instagramUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f8efe5] transition hover:border-[#d2a24c]/50 hover:text-[#d2a24c]"><Instagram size={15} />{siteConfig.instagramHandle}</Link>
             </div>
             <p className="mt-6 text-sm text-[#f8efe5]/60">© 2026 9 BAR. All rights reserved.</p>
@@ -71,7 +71,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
       <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 rounded-2xl border border-[#c8a46a]/35 bg-[#3b2a1f]/95 p-2 shadow-2xl backdrop-blur-xl sm:hidden">
-        <Link href={whatsappOrderLink()} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#8b6a3d] via-[#c8a46a] to-[#8b6a3d] px-3 py-3 text-sm font-bold text-[#fffaf3]">Order on WhatsApp</Link>
+        <Link href="/menu" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#8b6a3d] via-[#c8a46a] to-[#8b6a3d] px-3 py-3 text-sm font-bold text-[#fffaf3]">Start your order</Link>
         <Link href={orderLinks.phone} aria-label="Call 9 BAR" className="flex w-12 items-center justify-center rounded-xl border border-[#c8a46a]/35 text-[#f6f0e8]"><PhoneCall size={18} /></Link>
       </div>
     </div>

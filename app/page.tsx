@@ -43,7 +43,7 @@ export default function Home() {
               Café-level espresso, crafted with intent and delivered to your door. Your daily ritual, elevated.
             </motion.p>
             <motion.div variants={reveal} className="mt-9 flex flex-wrap gap-3">
-              <Link href={orderLinks.whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[#f3cf86]/50 bg-gradient-to-r from-[#c99336] via-[#e4b05d] to-[#c99336] bg-[length:200%_auto] px-6 py-3.5 text-sm font-bold text-[#120c05] shadow-[0_14px_35px_rgba(210,162,76,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-[position:right_center]">
+              <Link href="/menu" className="inline-flex items-center gap-2 rounded-full border border-[#f3cf86]/50 bg-gradient-to-r from-[#c99336] via-[#e4b05d] to-[#c99336] bg-[length:200%_auto] px-6 py-3.5 text-sm font-bold text-[#120c05] shadow-[0_14px_35px_rgba(210,162,76,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-[position:right_center]">
                 Order Now <ArrowRight size={17} />
               </Link>
               <Link href="/menu" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#d2a24c]/60 hover:bg-white/10">
