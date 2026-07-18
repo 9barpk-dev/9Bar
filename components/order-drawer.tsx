@@ -63,6 +63,7 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
   const [isLocating, setIsLocating] = useState(false);
   const [locationAccuracy, setLocationAccuracy] = useState<number | null>(null);
   const [locationConfirmed, setLocationConfirmed] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
   const updateQuantity = (name: string, change: number) => setItems((current) => current.flatMap((item) => item.name !== name ? [item] : item.quantity + change > 0 ? [{ ...item, quantity: item.quantity + change }] : []));
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -83,10 +84,13 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
     }, { enableHighAccuracy: true, timeout: 10000 });
   };
   const checkout = () => {
+    if (isCheckingOut) return;
+    setIsCheckingOut(true);
     if (!items.length) return;
     const missing = [!customerName.trim() && "name", !customerPhoneLocal.trim() && "phone", (!customerAddress || !locationConfirmed) && "location"].filter(Boolean) as string[];
     if (missing.length) {
       setMissingFields(missing);
+      setIsCheckingOut(false);
       return;
     }
     setMissingFields([]);
@@ -123,6 +127,7 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
     setItems([]);
     close();
+    setIsCheckingOut(false);
   };
 
   useEffect(() => {
@@ -164,7 +169,7 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
                 <label className="grid gap-1 text-sm font-semibold text-white">Phone number<input value={customerPhoneLocal} onChange={(e) => { setCustomerPhoneLocal(e.target.value); setMissingFields((current) => current.filter((field) => field !== "phone")); }} onBlur={fillSavedCustomer} inputMode="tel" aria-invalid={missingFields.includes("phone")} className={`w-full rounded-xl border bg-white px-3 py-2.5 text-sm text-[#111] outline-none ${missingFields.includes("phone") ? "border-[#e77b6b] ring-2 ring-[#e77b6b]/60" : "border-transparent"}`} />{missingFields.includes("phone") && <span className="text-xs text-[#ffd2ca]">Phone number is required.</span>}</label>
                 <div className={`rounded-xl border p-3 ${missingFields.includes("location") ? "border-[#e77b6b] bg-[#5a3228]" : "border-white/25 bg-white/10"}`}><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-sm font-semibold text-white">Delivery location</p><p className="mt-1 text-xs text-[#f8efe5]/80">Share your live Google Maps location for precise delivery.</p></div><button type="button" onClick={getLocation} disabled={isLocating} className="inline-flex items-center gap-2 rounded-full bg-[#f8efe5] px-4 py-2 text-sm font-bold text-[#3b2a1f] disabled:opacity-60"><LocateFixed size={16} />{isLocating ? "Getting location…" : "Get live location"}</button></div>{customerAddress && <div className="mt-3 rounded-lg bg-[#1e4a35] p-3 text-xs text-[#e6fff0]"><p className="font-bold">Live location added{locationAccuracy ? ` — accurate within about ${locationAccuracy} m` : ""}.</p><Link href={customerAddress} target="_blank" rel="noreferrer" className="mt-2 inline-block font-bold underline">Review your pin on Google Maps</Link><label className="mt-3 flex items-start gap-2 font-semibold"><input type="checkbox" checked={locationConfirmed} onChange={(event) => { setLocationConfirmed(event.target.checked); setMissingFields((current) => current.filter((field) => field !== "location")); }} className="mt-0.5 h-4 w-4 accent-[#d2a24c]" />I confirm this map pin is correct.</label></div>}{locationError && <p className="mt-3 text-xs font-semibold text-[#ffd2ca]">{locationError}</p>}{missingFields.includes("location") && <p className="mt-3 text-xs font-semibold text-[#ffd2ca]">Get and confirm your live location before ordering.</p>}</div>
               </div>
-              <button onClick={checkout} disabled={!items.length} className="mt-5 w-full rounded-full bg-[#d2a24c] px-5 py-3.5 text-sm font-bold text-[#160f07] disabled:cursor-not-allowed disabled:opacity-50">Checkout on WhatsApp</button></div>
+              <button onClick={checkout} disabled={!items.length || isCheckingOut} className="mt-5 w-full rounded-full bg-[#d2a24c] px-5 py-3.5 text-sm font-bold text-[#160f07] disabled:cursor-not-allowed disabled:opacity-50">Checkout on WhatsApp</button></div>
           </>}
       </div>
     </aside></>;
