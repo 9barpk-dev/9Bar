@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Minus, Plus, ShoppingBag, X } from "lucide-react";
@@ -46,6 +46,7 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
   const [customerPhoneLocal, setCustomerPhoneLocal] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [isReturning, setIsReturning] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const updateQuantity = (name: string, change: number) => setItems((current) => current.flatMap((item) => item.name !== name ? [item] : item.quantity + change > 0 ? [{ ...item, quantity: item.quantity + change }] : []));
   const checkout = () => {
     if (!items.length) return;
@@ -83,6 +84,68 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
     }
   }, []);
 
+  const exportData = () => {
+    try {
+      const data = { customerName, customerPhone: customerPhoneLocal, customerAddress };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "9bar-customer.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      // ignore
+    }
+  };
+
+  const triggerImport = () => fileInputRef.current?.click();
+
+  const handleImportChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(String(reader.result));
+        const name = parsed.customerName ?? parsed.name ?? "";
+        const phone = parsed.customerPhone ?? parsed.phone ?? "";
+        const address = parsed.customerAddress ?? parsed.address ?? "";
+        setCustomerName(name);
+        setCustomerPhoneLocal(phone);
+        setCustomerAddress(address);
+        try {
+          if (name) localStorage.setItem("customerName", name);
+          if (phone) localStorage.setItem("customerPhone", phone);
+          if (address) localStorage.setItem("customerAddress", address);
+        } catch (e) {
+          // ignore
+        }
+        setIsReturning(true);
+      } catch (err) {
+        // invalid file
+        alert("Could not import file: invalid JSON");
+      }
+    };
+    reader.readAsText(file);
+    // clear input so same file can be re-selected later
+    e.currentTarget.value = "";
+  };
+
+  const clearSaved = () => {
+    try {
+      localStorage.removeItem("customerName");
+      localStorage.removeItem("customerPhone");
+      localStorage.removeItem("customerAddress");
+    } catch (e) {
+      // ignore
+    }
+    setCustomerName("");
+    setCustomerPhoneLocal("");
+    setCustomerAddress("");
+    setIsReturning(false);
+  };
+
   return <>{isOpen && <div className="fixed inset-0 z-[70] bg-black/45 backdrop-blur-sm" onClick={close} />}
     <aside aria-label="Your order" className={`fixed inset-y-0 right-0 z-[80] flex w-full max-w-xl flex-col bg-[#fffaf3] shadow-2xl transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
       <div className="flex items-center justify-between border-b border-[#c8a46a]/20 px-5 py-5"><div><p className="eyebrow">Your order</p><h2 className="mt-1 text-2xl font-semibold">A coffee moment, curated.</h2></div><button type="button" onClick={close} aria-label="Close order bag" className="rounded-full p-2 text-[#3b2a1f] hover:bg-[#c8a46a]/15"><X /></button></div>
@@ -96,6 +159,12 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
                 <input value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Your name" className="w-full rounded-md px-3 py-2 text-sm text-[#111]" />
                 <input value={customerPhoneLocal} onChange={(e) => setCustomerPhoneLocal(e.target.value)} placeholder="Phone number" className="w-full rounded-md px-3 py-2 text-sm text-[#111]" />
                 <input value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} placeholder="Delivery address (street, area)" className="w-full rounded-md px-3 py-2 text-sm text-[#111]" />
+                <div className="flex gap-2">
+                  <button onClick={exportData} type="button" className="rounded-md bg-white/90 px-3 py-2 text-sm font-medium text-[#3b2a1f]">Export</button>
+                  <button onClick={triggerImport} type="button" className="rounded-md bg-white/90 px-3 py-2 text-sm font-medium text-[#3b2a1f]">Import</button>
+                  <button onClick={clearSaved} type="button" className="ml-auto rounded-md border border-white/20 px-3 py-2 text-sm font-medium text-[#f8efe5]">Clear saved info</button>
+                </div>
+                <input ref={fileInputRef} type="file" accept="application/json" onChange={handleImportChange} className="hidden" />
               </div>
               <button onClick={checkout} disabled={!items.length} className="mt-5 w-full rounded-full bg-[#d2a24c] px-5 py-3.5 text-sm font-bold text-[#160f07] disabled:cursor-not-allowed disabled:opacity-50">Checkout on WhatsApp</button></div>
           </>}
