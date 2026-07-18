@@ -43,6 +43,7 @@ export function MenuCarousel() {
               </div>
               <Link href={`/drink/${activeItem.slug}`} className="text-sm font-semibold text-[#dcb05b] transition hover:text-white">View details →</Link>
             </div>
+            <label className="mt-6 block"><span className="sr-only">Choose a menu item</span><input type="range" min="0" max={menuItems.length - 1} value={activeIndex} onChange={(event) => setActiveIndex(Number(event.target.value))} className="h-2 w-full cursor-pointer accent-[#d2a24c]" aria-label="Choose a menu item" /></label>
           </div>
         </div>
       </div>

@@ -60,6 +60,8 @@ export default function Home() {
 
       <DeliveryAvailabilityChecker />
 
+      <MenuCarousel />
+
       <motion.section variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid gap-4 md:grid-cols-3">
           {trustItems.map(({ title, text, icon: Icon }) => (
@@ -70,8 +72,6 @@ export default function Home() {
           ))}
         </div>
       </motion.section>
-
-      <MenuCarousel />
 
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5"><div><p className="eyebrow">Selected for you</p><h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">Our signature pours.</h2></div><Link href="/menu" className="inline-flex items-center gap-2 text-sm font-semibold text-[#dcb05b] transition hover:gap-3">Browse the full menu <ArrowRight size={16} /></Link></div>
