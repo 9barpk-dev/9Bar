@@ -23,8 +23,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-[#c8a46a]/20 bg-[#f6f0e8]/80 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" aria-label="9 BAR home" className="flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.03]">
-            <span className="relative h-10 w-10 overflow-hidden rounded-full border border-[#d2a24c]/50 bg-[#e8d7bd] shadow-[0_0_18px_rgba(210,162,76,0.2)]"><Image src="/images/brand/9bar-brand-art.png" alt="9 BAR coffee mark" fill sizes="40px" className="object-cover object-[50%_31%] scale-[1.75]" /></span>
-            <span className="font-serif text-lg font-semibold tracking-[0.2em] text-[#3b2a1f]">9 BAR</span>
+            <Image src="/images/logo/logo.svg" alt="9 BAR" width={110} height={40} priority className="h-10 w-[110px] object-contain" />
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             {navItems.map((item) => (

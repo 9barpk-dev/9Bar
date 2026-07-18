@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Minus, Plus, ShoppingBag, X } from "lucide-react";
@@ -8,8 +8,15 @@ import { foodpandaUrl, whatsappNumber } from "@/lib/site";
 import { deliveryFeeText } from "@/lib/delivery";
 
 type CartItem = { name: string; price: number; quantity: number };
+type SavedCustomer = { name: string; phone: string; address: string; orderCount: number };
 type CartContextValue = { addItem: (name: string, price: string) => void; openCart: () => void; count: number };
 const CartContext = createContext<CartContextValue | null>(null);
+const customersStorageKey = "9bar-customers";
+
+function phoneKey(phone: string) { return phone.replace(/\D/g, ""); }
+function readCustomers(): Record<string, SavedCustomer> {
+  try { return JSON.parse(localStorage.getItem(customersStorageKey) ?? "{}"); } catch { return {}; }
+}
 
 function numericPrice(price: string) { return Number(price.replace(/[^0-9]/g, "")); }
 export function useOrderCart() {
@@ -45,105 +52,63 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
   const [customerName, setCustomerName] = useState("");
   const [customerPhoneLocal, setCustomerPhoneLocal] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
-  const [isReturning, setIsReturning] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const updateQuantity = (name: string, change: number) => setItems((current) => current.flatMap((item) => item.name !== name ? [item] : item.quantity + change > 0 ? [{ ...item, quantity: item.quantity + change }] : []));
   const checkout = () => {
     if (!items.length) return;
     const order = items.map((item) => `${item.quantity}× ${item.name}`).join(", ");
-    // persist customer details for returning customers
+    const customerPhoneKey = phoneKey(customerPhoneLocal);
+    let orderNumber: number | null = null;
     try {
+      const customers = readCustomers();
+      const previousCustomer = customerPhoneKey ? customers[customerPhoneKey] : undefined;
+      orderNumber = customerPhoneKey ? (previousCustomer?.orderCount ?? 0) + 1 : null;
+
+      if (customerPhoneKey && orderNumber) {
+        customers[customerPhoneKey] = {
+          name: customerName || previousCustomer?.name || "",
+          phone: customerPhoneLocal,
+          address: customerAddress || previousCustomer?.address || "",
+          orderCount: orderNumber,
+        };
+        localStorage.setItem(customersStorageKey, JSON.stringify(customers));
+      }
+
+      // Keep the most recent details for automatic form filling on the next visit.
       if (customerName) localStorage.setItem("customerName", customerName);
       if (customerPhoneLocal) localStorage.setItem("customerPhone", customerPhoneLocal);
       if (customerAddress) localStorage.setItem("customerAddress", customerAddress);
-    } catch (e) {
+    } catch {
       /* ignore storage errors */
     }
 
     const customerInfo = `Name: ${customerName || "(not provided)"}\nPhone: ${customerPhoneLocal || "(not provided)"}\nAddress: ${customerAddress || "(not provided)"}\n\n`;
 
-    const message = `Hello 9 BAR, I would like to place an order.\n\n${customerInfo}Order: ${order}\nTotal: Rs. ${total}\n\nDelivery fee: ${deliveryFeeText}\n\nPlease confirm my delivery address and delivery fee.`;
+    const customerStatus = orderNumber ? `Customer record: ${orderNumber === 1 ? "New customer" : "Returning customer"} — order #${orderNumber}\n\n` : "Customer record: Not tracked (phone not provided)\n\n";
+    const message = `Hello 9 BAR, I would like to place an order.\n\n${customerInfo}${customerStatus}Order: ${order}\nTotal: Rs. ${total}\n\nDelivery fee: ${deliveryFeeText}\n\nPlease confirm my delivery address and delivery fee.`;
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
     setItems([]);
     close();
   };
 
   useEffect(() => {
-    try {
-      const storedName = localStorage.getItem("customerName");
-      const storedPhone = localStorage.getItem("customerPhone");
-      const storedAddress = localStorage.getItem("customerAddress");
-      if (storedName || storedPhone || storedAddress) {
-        if (storedName) setCustomerName(storedName);
-        if (storedPhone) setCustomerPhoneLocal(storedPhone);
-        if (storedAddress) setCustomerAddress(storedAddress);
-        setIsReturning(true);
-      }
-    } catch (e) {
-      /* ignore storage errors */
-    }
-  }, []);
-
-  const exportData = () => {
-    try {
-      const data = { customerName, customerPhone: customerPhoneLocal, customerAddress };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "9bar-customer.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      // ignore
-    }
-  };
-
-  const triggerImport = () => fileInputRef.current?.click();
-
-  const handleImportChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
+    const loadSavedCustomer = () => {
       try {
-        const parsed = JSON.parse(String(reader.result));
-        const name = parsed.customerName ?? parsed.name ?? "";
-        const phone = parsed.customerPhone ?? parsed.phone ?? "";
-        const address = parsed.customerAddress ?? parsed.address ?? "";
-        setCustomerName(name);
-        setCustomerPhoneLocal(phone);
-        setCustomerAddress(address);
-        try {
-          if (name) localStorage.setItem("customerName", name);
-          if (phone) localStorage.setItem("customerPhone", phone);
-          if (address) localStorage.setItem("customerAddress", address);
-        } catch (e) {
-          // ignore
-        }
-        setIsReturning(true);
-      } catch (err) {
-        // invalid file
-        alert("Could not import file: invalid JSON");
+        setCustomerName(localStorage.getItem("customerName") ?? "");
+        setCustomerPhoneLocal(localStorage.getItem("customerPhone") ?? "");
+        setCustomerAddress(localStorage.getItem("customerAddress") ?? "");
+      } catch {
+        /* ignore storage errors */
       }
     };
-    reader.readAsText(file);
-    // clear input so same file can be re-selected later
-    e.currentTarget.value = "";
-  };
+    const frame = requestAnimationFrame(loadSavedCustomer);
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
-  const clearSaved = () => {
-    try {
-      localStorage.removeItem("customerName");
-      localStorage.removeItem("customerPhone");
-      localStorage.removeItem("customerAddress");
-    } catch (e) {
-      // ignore
-    }
-    setCustomerName("");
-    setCustomerPhoneLocal("");
-    setCustomerAddress("");
-    setIsReturning(false);
+  const fillSavedCustomer = () => {
+    const savedCustomer = readCustomers()[phoneKey(customerPhoneLocal)];
+    if (!savedCustomer) return;
+    setCustomerName(savedCustomer.name);
+    setCustomerAddress(savedCustomer.address);
   };
 
   return <>{isOpen && <div className="fixed inset-0 z-[70] bg-black/45 backdrop-blur-sm" onClick={close} />}
@@ -154,17 +119,10 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
           <div className="mt-7 grid grid-cols-2 gap-2 rounded-2xl bg-[#efe3d1] p-2"><button onClick={() => setMethod("direct")} className={`rounded-xl px-3 py-3 text-left text-sm font-bold ${method === "direct" ? "bg-[#3b2a1f] text-white" : "text-[#3b2a1f]/70"}`}><div className="flex items-center gap-2"><Image src="/whatsapp.png" alt="WhatsApp" width={18} height={18} /><span>Order from 9 BAR</span></div><span className="mt-1 block text-xs font-normal opacity-75">Cart + WhatsApp checkout</span></button><button onClick={() => setMethod("foodpanda")} className={`rounded-xl px-3 py-3 text-left text-sm font-bold ${method === "foodpanda" ? "bg-[#3b2a1f] text-white" : "text-[#3b2a1f]/70"}`}><div className="flex items-center gap-2"><Image src="/icons8-foodpanda-48.png" alt="Foodpanda" width={18} height={18} /><span>Order via Foodpanda</span></div><span className="mt-1 block text-xs font-normal opacity-75">Foodpanda orders & tracking</span></button></div>
           {method === "foodpanda" ? <div className="mt-6 rounded-3xl border border-[#c8a46a]/25 p-5 text-sm leading-6 text-[#3b2a1f]/75"><p className="font-semibold text-[#3b2a1f]">Order and tracking handled by Foodpanda.</p><p className="mt-2">You&apos;ll be redirected to the 9 BAR Foodpanda store for secure checkout and live tracking.</p><Link href={foodpandaUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#d2a24c] px-5 py-3 font-bold text-[#160f07]"><Image src="/icons8-foodpanda-48.png" alt="Foodpanda" width={18} height={18} />Continue to Foodpanda</Link></div> : <>
             <div className="mt-6 rounded-3xl bg-[#3b2a1f] p-5 text-[#f8efe5]"><div className="flex justify-between text-sm"><span>Order total</span><span>Rs. {total}</span></div><p className="mt-3 text-xs leading-5 text-[#f8efe5]/70">{deliveryFeeText}</p><p className="mt-2 text-xs leading-5 text-[#f8efe5]/70">Delivery address, fee, and dispatch details are confirmed directly via WhatsApp.</p>
-              {isReturning && <p className="mt-3 text-sm">Welcome back{customerName ? `, ${customerName}` : ""}! We&apos;ll use your saved details unless you update them below.</p>}
               <div className="mt-4 grid gap-2">
                 <input value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Your name" className="w-full rounded-md px-3 py-2 text-sm text-[#111]" />
-                <input value={customerPhoneLocal} onChange={(e) => setCustomerPhoneLocal(e.target.value)} placeholder="Phone number" className="w-full rounded-md px-3 py-2 text-sm text-[#111]" />
+                <input value={customerPhoneLocal} onChange={(e) => setCustomerPhoneLocal(e.target.value)} onBlur={fillSavedCustomer} placeholder="Phone number" className="w-full rounded-md px-3 py-2 text-sm text-[#111]" />
                 <input value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} placeholder="Delivery address (street, area)" className="w-full rounded-md px-3 py-2 text-sm text-[#111]" />
-                <div className="flex gap-2">
-                  <button onClick={exportData} type="button" className="rounded-md bg-white/90 px-3 py-2 text-sm font-medium text-[#3b2a1f]">Export</button>
-                  <button onClick={triggerImport} type="button" className="rounded-md bg-white/90 px-3 py-2 text-sm font-medium text-[#3b2a1f]">Import</button>
-                  <button onClick={clearSaved} type="button" className="ml-auto rounded-md border border-white/20 px-3 py-2 text-sm font-medium text-[#f8efe5]">Clear saved info</button>
-                </div>
-                <input ref={fileInputRef} type="file" accept="application/json" onChange={handleImportChange} className="hidden" />
               </div>
               <button onClick={checkout} disabled={!items.length} className="mt-5 w-full rounded-full bg-[#d2a24c] px-5 py-3.5 text-sm font-bold text-[#160f07] disabled:cursor-not-allowed disabled:opacity-50">Checkout on WhatsApp</button></div>
           </>}
