@@ -23,7 +23,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-[#c8a46a]/20 bg-[#f6f0e8]/80 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" aria-label="9 BAR home" className="flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.03]">
-            <Image src="/images/logo/logo.svg" alt="9 BAR" width={110} height={40} priority className="h-10 w-[110px] object-contain" />
+            <Image src="/images/logo/9bar.png" alt="9 BAR" width={60} height={60} priority className="h-14 w-14 rounded-xl object-contain shadow-[0_4px_14px_rgba(59,42,31,0.15)]" />
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             {navItems.map((item) => (
@@ -70,6 +70,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+      <div className="fixed bottom-24 right-4 z-50 flex flex-col items-center gap-3 sm:bottom-6 sm:right-6">
+        <Link href={orderLinks.foodpanda} target="_blank" rel="noreferrer" aria-label="Order through Foodpanda" className="group flex flex-col items-center"><span className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-white bg-[#ff2b85] p-3 shadow-[0_12px_28px_rgba(255,43,133,0.4)] transition group-hover:scale-110"><Image src="/icons8-foodpanda-48.png" alt="" width={42} height={42} /></span><span className="mt-1 rounded-full bg-[#3b2a1f] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#fffaf3]">Recommended</span></Link>
+        <Link href={orderLinks.whatsapp} target="_blank" rel="noreferrer" aria-label="Order through WhatsApp" className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#25d366] p-3 shadow-[0_12px_28px_rgba(37,211,102,0.35)] transition hover:scale-110"><Image src="/whatsapp.png" alt="" width={38} height={38} /></Link>
+      </div>
       <div className="fixed inset-x-3 bottom-3 z-50 flex gap-2 rounded-2xl border border-[#c8a46a]/35 bg-[#3b2a1f]/95 p-2 shadow-2xl backdrop-blur-xl sm:hidden">
         <Link href="/menu" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#8b6a3d] via-[#c8a46a] to-[#8b6a3d] px-3 py-3 text-sm font-bold text-[#fffaf3]">Start your order</Link>
         <Link href={orderLinks.phone} aria-label="Call 9 BAR" className="flex w-12 items-center justify-center rounded-xl border border-[#c8a46a]/35 text-[#f6f0e8]"><PhoneCall size={18} /></Link>

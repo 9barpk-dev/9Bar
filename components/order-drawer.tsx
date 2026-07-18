@@ -28,16 +28,22 @@ export function useOrderCart() {
 export function OrderCartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [addedItem, setAddedItem] = useState<string | null>(null);
   const addItem = useCallback((name: string, price: string) => {
     const amount = numericPrice(price);
     setItems((current) => {
       const existing = current.find((item) => item.name === name);
       return existing ? current.map((item) => item.name === name ? { ...item, quantity: item.quantity + 1 } : item) : [...current, { name, price: amount, quantity: 1 }];
     });
-    setIsOpen(true);
+    setAddedItem(name);
   }, []);
+  useEffect(() => {
+    if (!addedItem) return;
+    const timeout = window.setTimeout(() => setAddedItem(null), 2800);
+    return () => window.clearTimeout(timeout);
+  }, [addedItem]);
   const count = items.reduce((total, item) => total + item.quantity, 0);
-  return <CartContext.Provider value={{ addItem, openCart: () => setIsOpen(true), count }}><OrderDrawer items={items} setItems={setItems} isOpen={isOpen} close={() => setIsOpen(false)} />{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ addItem, openCart: () => setIsOpen(true), count }}><OrderDrawer items={items} setItems={setItems} isOpen={isOpen} close={() => setIsOpen(false)} />{children}{addedItem && <div role="status" className="fixed bottom-5 left-1/2 z-[90] -translate-x-1/2 rounded-full bg-[#3b2a1f] px-5 py-3 text-sm font-semibold text-[#fffaf3] shadow-xl">Added to cart successfully: {addedItem}</div>}</CartContext.Provider>;
 }
 
 export function CartButton() {
@@ -115,7 +121,8 @@ function OrderDrawer({ items, setItems, isOpen, close }: { items: CartItem[]; se
     <aside aria-label="Your order" className={`fixed inset-y-0 right-0 z-[80] flex w-full max-w-xl flex-col bg-[#fffaf3] shadow-2xl transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
       <div className="flex items-center justify-between border-b border-[#c8a46a]/20 px-5 py-5"><div><p className="eyebrow">Your order</p><h2 className="mt-1 text-2xl font-semibold">A coffee moment, curated.</h2></div><button type="button" onClick={close} aria-label="Close order bag" className="rounded-full p-2 text-[#3b2a1f] hover:bg-[#c8a46a]/15"><X /></button></div>
       <div className="flex-1 overflow-y-auto p-5 sm:p-6">
-          {items.length === 0 ? <div className="rounded-3xl border border-dashed border-[#c8a46a]/45 p-8 text-center text-sm text-[#3b2a1f]/70">Your order bag is waiting for something delicious.</div> : <div className="space-y-3">{items.map((item) => <div key={item.name} className="flex items-center justify-between rounded-2xl border border-[#c8a46a]/20 p-4"><div><p className="font-semibold">{item.name}</p><p className="mt-1 text-sm text-[#8b6a3d]">Rs. {item.price}</p></div><div className="flex items-center gap-3"><button onClick={() => updateQuantity(item.name, -1)} aria-label={`Remove one ${item.name}`} className="rounded-full border p-1"><Minus size={14} /></button><span className="w-4 text-center text-sm font-semibold">{item.quantity}</span><button onClick={() => updateQuantity(item.name, 1)} aria-label={`Add one ${item.name}`} className="rounded-full border p-1"><Plus size={14} /></button></div></div>)}</div>}
+          {items.length === 0 ? <div className="rounded-3xl border border-dashed border-[#c8a46a]/45 p-8 text-center text-sm text-[#3b2a1f]/80"><p>Your order bag is waiting for something delicious.</p><Link href="/menu" onClick={close} className="mt-4 inline-flex rounded-full bg-[#3b2a1f] px-4 py-2 font-semibold text-white">Browse the menu</Link></div> : <div className="space-y-3">{items.map((item) => <div key={item.name} className="flex items-center justify-between rounded-2xl border border-[#c8a46a]/20 p-4"><div><p className="font-semibold">{item.name}</p><p className="mt-1 text-sm text-[#8b6a3d]">Rs. {item.price}</p></div><div className="flex items-center gap-3"><button onClick={() => updateQuantity(item.name, -1)} aria-label={`Remove one ${item.name}`} className="rounded-full border p-1"><Minus size={14} /></button><span className="w-4 text-center text-sm font-semibold">{item.quantity}</span><button onClick={() => updateQuantity(item.name, 1)} aria-label={`Add one ${item.name}`} className="rounded-full border p-1"><Plus size={14} /></button></div></div>)}</div>}
+          {items.length > 0 && <Link href="/menu" onClick={close} className="mt-5 inline-flex items-center rounded-full border border-[#8b6a3d]/30 px-4 py-2 text-sm font-semibold text-[#3b2a1f] transition hover:bg-[#efe3d1]">← Continue browsing menu</Link>}
           <div className="mt-7 grid gap-3 sm:grid-cols-[1.25fr_1fr]">
             <button type="button" aria-pressed={method === "foodpanda"} onClick={() => setMethod("foodpanda")} className={`rounded-2xl border p-4 text-left transition ${method === "foodpanda" ? "border-[#d2a24c] bg-[#d2a24c] text-[#160f07] shadow-[0_12px_28px_rgba(210,162,76,0.28)]" : "border-[#c8a46a]/35 bg-[#efe3d1] text-[#3b2a1f] hover:border-[#d2a24c]"}`}><div className="flex items-center gap-2.5"><Image src="/icons8-foodpanda-48.png" alt="Foodpanda" width={24} height={24} /><span className="text-base font-bold">Order via Foodpanda</span></div><span className="mt-2 block text-sm leading-5 opacity-80">Fast checkout, live tracking, and secure payment.</span><span className="mt-3 inline-block text-xs font-bold uppercase tracking-wide">Recommended</span></button>
             <button type="button" aria-pressed={method === "direct"} onClick={() => setMethod("direct")} className={`rounded-2xl border p-4 text-left transition ${method === "direct" ? "border-[#3b2a1f] bg-[#3b2a1f] text-white shadow-[0_12px_28px_rgba(59,42,31,0.2)]" : "border-[#c8a46a]/35 bg-[#fffaf3] text-[#3b2a1f] hover:border-[#8b6a3d]"}`}><div className="flex items-center gap-2.5"><Image src="/whatsapp.png" alt="WhatsApp" width={22} height={22} /><span className="text-base font-bold">Order from 9 BAR</span></div><span className="mt-2 block text-sm leading-5 opacity-75">Use your cart and confirm your order directly on WhatsApp.</span><span className="mt-3 inline-block text-xs font-bold">Website order</span></button>

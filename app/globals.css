@@ -36,6 +36,9 @@ h1, h2, h3, h4 { font-family: "Playfair Display", "Cormorant Garamond", Georgia,
 .brand-page [class*="border-white"], main > section:not(:first-child):not(.delivery-checker) [class*="border-white"] { border-color: rgba(139, 106, 61, .18); }
 .brand-page [class*="bg-white/"], main > section:not(:first-child):not(.delivery-checker) [class*="bg-white/"] { background-color: rgba(255, 252, 247, .58); }
 .brand-page .eyebrow, main > section:not(:first-child):not(.delivery-checker) .eyebrow { color: #8b6a3d; }
+.on-dark .text-white { color: #fff; }
+.on-dark [class*="text-[#f8efe5]"] { color: rgba(248, 239, 229, .82); }
+.on-dark .eyebrow { color: #dcb05b; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }

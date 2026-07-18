@@ -19,7 +19,7 @@ export function MenuCarousel() {
   const move = (direction: -1 | 1) => setActiveIndex((current) => (current + direction + menuItems.length) % menuItems.length);
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24" aria-label="Full menu slideshow">
+    <section className="on-dark mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24" aria-label="Full menu slideshow">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
         <div><p className="eyebrow">The full menu</p><h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">Something for every coffee mood.</h2></div>
         <Link href="/menu" className="text-sm font-semibold text-[#dcb05b] transition hover:text-white">Browse by category →</Link>

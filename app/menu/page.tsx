@@ -1,17 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { OrderActions } from "@/components/order-actions";
 import { menuItems } from "@/lib/menu";
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 const item = { hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0 } };
 
-const menuCategories = [...new Set(menuItems.map((coffee) => coffee.category))];
+const menuCategories = ["Frappes", "Iced Latte", "Hot", "Americano", "Long Black"];
 
 export default function MenuPage() {
   const [selectedCategory, setSelectedCategory] = useState(menuCategories[0]);
@@ -37,7 +36,7 @@ export default function MenuPage() {
                     <Image src={coffee.image} alt={coffee.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1280px) 50vw, 33vw" className="object-contain transition-transform duration-700 group-hover:scale-105" />
                     {coffee.bestSeller && <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#d2a24c] px-3 py-1.5 text-xs font-bold text-[#160f07]"><Sparkles size={12} /> Best Seller</span>}
                   </div>
-                  <div className="p-6"><div className="flex items-start justify-between gap-3"><div><p className="eyebrow text-[10px]">{coffee.category}</p><h2 className="mt-2 text-xl font-semibold text-white">{coffee.name}</h2></div><span className="shrink-0 text-sm font-semibold text-[#dcb05b]">{coffee.price}</span></div><p className="mt-3 text-sm leading-7 text-[#f8efe5]/65">{coffee.description}</p><div className="mt-5 flex flex-wrap gap-2 text-xs"><span className="rounded-full border border-white/10 px-3 py-1.5 text-[#f8efe5]/70">{coffee.availability}</span>{coffee.seasonal && <span className="rounded-full border border-[#d2a24c]/30 px-3 py-1.5 text-[#dcb05b]">Seasonal</span>}</div><div className="mt-6 flex flex-wrap gap-3"><OrderActions compact drinkName={coffee.name} price={coffee.price} /><Link href={`/drink/${coffee.slug}`} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-2.5 text-sm font-semibold text-white transition-all hover:border-[#d2a24c]/50 hover:text-[#dcb05b]">Details <ArrowRight size={14} /></Link></div></div>
+                  <div className="p-3 sm:p-6"><div className="flex items-start justify-between gap-2"><div><p className="eyebrow text-[9px]">{coffee.category}</p><h2 className="mt-1 text-base font-semibold text-[#3b2a1f] sm:mt-2 sm:text-xl">{coffee.name}</h2></div><span className="shrink-0 text-sm font-bold text-[#8b6a3d]">{coffee.price}</span></div><p className="mt-2 text-xs leading-5 text-[#3b2a1f]/80 sm:mt-3 sm:text-sm sm:leading-7">{coffee.description}</p><div className="mt-4"><OrderActions compact drinkName={coffee.name} price={coffee.price} /></div></div>
                 </motion.article>
           ))}
         </div>
